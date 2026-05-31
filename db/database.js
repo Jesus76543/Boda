@@ -1,8 +1,16 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, '..', 'db', 'rsvp.db');
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'rsvp.db');
+
+// Crear el directorio si no existe
+const dir = path.dirname(DB_PATH);
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
 const db = new Database(DB_PATH);
 
 db.pragma('journal_mode = WAL');
@@ -52,7 +60,7 @@ db.exec(`
   );
 `);
 
-// Agregar columnas misa si no existen (para bases de datos ya creadas)
+// Agregar columnas misa si no existen
 try { db.exec(`ALTER TABLE eventos ADD COLUMN misa_hora TEXT DEFAULT '17:00'`); } catch {}
 try { db.exec(`ALTER TABLE eventos ADD COLUMN misa_lugar TEXT DEFAULT ''`); } catch {}
 
@@ -61,13 +69,6 @@ const evento = db.prepare('SELECT id FROM eventos WHERE id = 1').get();
 if (!evento) {
   db.prepare(`INSERT INTO eventos (nombre1, nombre2, fecha, hora, lugar, misa_hora, misa_lugar, mensaje)
     VALUES ('Mónica','Eduardo','2027-01-01','20:00','Jardín Casta Brava','17:00','Templo del Perpetuo Socorro','Los esperamos con todo nuestro amor.')`).run();
-} else {
-  // Actualizar datos reales si ya existe el evento con defaults
-  db.prepare(`UPDATE eventos SET
-    nombre1='Mónica', nombre2='Eduardo',
-    hora='20:00', lugar='Jardín Casta Brava',
-    misa_hora='17:00', misa_lugar='Templo del Perpetuo Socorro'
-    WHERE id=1 AND lugar='Por definir'`).run();
 }
 
 const adminUser = db.prepare('SELECT id FROM usuarios WHERE username = ?').get('admin');
