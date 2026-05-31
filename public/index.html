@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mónica & Eduardo — Boda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sage:#6b7c5e;--sage-l:#8a9e7a;--sage-pale:#e8ede3;
+  --cream:#f8f5ef;--warm:#fdfaf5;--char:#2c2c28;
+  --muted:#8a8880;--border:rgba(107,124,94,0.2);
+  --gold:#b8975a;--red:#c7615a;--ok:#5a8b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--char);min-height:100vh}
+
+/* LOGIN */
+#login-page{display:none;align-items:center;justify-content:center;min-height:100vh;padding:1rem;background:var(--sage-pale)}
+#login-page.active{display:flex}
+.lcard{background:white;border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:360px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+.llogo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--sage);font-style:italic;margin-bottom:0.15rem}
+.lsub{font-size:0.7rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem}
+.lerr{color:var(--red);font-size:0.78rem;margin-bottom:0.75rem;display:none}
+.lcard input{width:100%;padding:0.72rem;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:0.88rem;background:var(--cream);outline:none;margin-bottom:0.75rem;color:var(--char)}
+.lcard input:focus{border-color:var(--sage)}
+
+/* NAV */
+nav{background:var(--warm);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:0.06em;color:var(--sage);font-style:italic}
+.nav-tabs{display:flex}
+.nav-tab{padding:0 1rem;height:56px;display:flex;align-items:center;font-size:0.73rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
+.nav-tab:hover{color:var(--sage)}
+.nav-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
+.nav-right{display:flex;align-items:center;gap:0.75rem}
+.nav-user{font-size:0.72rem;color:var(--muted)}
+
+/* PAGES */
+.page{display:none;padding:2rem;max-width:1100px;margin:0 auto}
+.page.active{display:block}
+.ph{margin-bottom:2rem}
+.ph h1{font-family:'Cormorant Garamond',serif;font-size:1.9rem}
+.ph p{color:var(--muted);font-size:0.83rem;margin-top:0.2rem}
+.ph-act{display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;align-items:center}
+
+/* FORMS */
+.fsec{background:white;border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.fsec h3{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:1rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem}
+.frow.s1{grid-template-columns:1fr}
+label{display:block;font-size:0.7rem;color:var(--muted);margin-bottom:0.28rem;letter-spacing:0.04em}
+input,select,textarea{width:100%;padding:0.58rem 0.72rem;border:1px solid var(--border);border-radius:8px;font-family:'Jost',sans-serif;font-size:0.84rem;background:var(--cream);color:var(--char);outline:none;transition:border-color 0.2s}
+input:focus,select:focus,textarea:focus{border-color:var(--sage)}
+
+/* BUTTONS */
+.btn{padding:0.62rem 1.35rem;border-radius:8px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.79rem;letter-spacing:0.06em;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem}
+.btn-primary{background:var(--sage);color:white}.btn-primary:hover{background:var(--sage-l)}
+.btn-outline{background:transparent;color:var(--sage);border:1px solid var(--sage)}.btn-outline:hover{background:var(--sage-pale)}
+.btn-danger{background:transparent;color:var(--red);border:1px solid var(--red)}.btn-danger:hover{background:#fdecea}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-ghost:hover{background:var(--sage-pale);color:var(--sage);border-color:var(--sage)}
+.btn-wa{background:#25d366;color:white;border:none}.btn-wa:hover{background:#1ebe5d}
+.btn-sm{padding:0.32rem 0.75rem;font-size:0.71rem}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.sc{background:white;border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
+.sc .n{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400}
+.sc .l{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:0.2rem}
+.sc-t .n{color:var(--char)}.sc-c .n{color:var(--ok)}.sc-p .n{color:var(--gold)}.sc-d .n{color:var(--red)}
+
+/* TABLE */
+.tw{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.th2{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem}
+.th2 h3{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.ftabs{display:flex;gap:0.4rem;flex-wrap:wrap}
+.ftab{padding:0.28rem 0.8rem;border-radius:20px;font-size:0.71rem;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Jost',sans-serif;transition:all 0.2s}
+.ftab.active{background:var(--sage);color:white;border-color:var(--sage)}
+table{width:100%;border-collapse:collapse}
+th{padding:0.7rem 1.1rem;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:var(--sage-pale);font-weight:500}
+td{padding:0.75rem 1.1rem;font-size:0.82rem;border-top:1px solid var(--border)}
+tr:hover td{background:var(--sage-pale)}
+.badge{display:inline-block;padding:0.2rem 0.62rem;border-radius:20px;font-size:0.67rem;font-weight:500}
+.b-c{background:#e6f3eb;color:#3a7a52}.b-p{background:#fdf3e0;color:#9a7229}.b-d{background:#fdecea;color:#a04040}
+.si{padding:0.48rem 0.8rem;border:1px solid var(--border);border-radius:8px;font-size:0.81rem;font-family:'Jost',sans-serif;background:var(--cream);color:var(--char);outline:none;width:200px}
+.si:focus{border-color:var(--sage)}
+
+/* MENSAJES */
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.mc{background:white;border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.mc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem}
+.mc-n{font-size:0.88rem;font-weight:500}
+.mc-t{font-size:0.81rem;color:var(--muted);line-height:1.6;font-style:italic}
+.mc-m{font-size:0.67rem;color:var(--muted);margin-top:0.7rem}
+
+/* MESAS */
+.ml{display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+.smb{background:white;border:1px solid var(--border);border-radius:12px;padding:1.25rem;min-width:210px;flex-shrink:0}
+.smb h3{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center}
+.mg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1rem;flex:1;min-width:0}
+.mcard{background:white;border:1.5px solid var(--border);border-radius:12px;overflow:hidden}
+.mh{background:var(--sage-pale);padding:0.68rem 1rem;display:flex;justify-content:space-between;align-items:center}
+.mh h4{font-size:0.73rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--sage);font-weight:500}
+.mh span{font-size:0.69rem;color:var(--muted)}
+.mb2{padding:0.72rem 1rem}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:0.36rem 0;border-bottom:1px solid var(--border);font-size:0.81rem}
+.mr:last-child{border-bottom:none}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;margin-right:5px}
+.dot-C{background:var(--ok)}.dot-P{background:#ccc}.dot-N{background:var(--red)}
+.smr{display:flex;justify-content:space-between;align-items:center;padding:0.36rem 0;border-bottom:1px solid var(--border);font-size:0.81rem}
+.smr:last-child{border-bottom:none}
+
+/* INVITACIÓN PREVIEW */
+.iw{display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap}
+.iphone{background:var(--char);border-radius:40px;padding:15px;width:265px;flex-shrink:0;box-shadow:0 24px 60px rgba(0,0,0,0.28)}
+.iscreen{background:var(--sage-pale);border-radius:28px;overflow:hidden;font-family:'Cormorant Garamond',serif}
+.ienv{background:var(--sage);padding:1.8rem 1.4rem 1.4rem;text-align:center;position:relative}
+.iflap{width:100%;height:0;border-left:117px solid transparent;border-right:117px solid transparent;border-top:56px solid rgba(0,0,0,0.14);position:absolute;top:0;left:0}
+.imono{font-size:2.4rem;color:rgba(255,255,255,0.92);font-style:italic;font-weight:300;position:relative;z-index:1;margin-top:1.4rem}
+.ibody{background:white;padding:1.4rem 1.1rem;text-align:center}
+.ipt{font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-family:'Jost',sans-serif}
+.inames{font-size:1.55rem;color:var(--char);line-height:1.1;margin:0.4rem 0;font-style:italic}
+.idiv{width:36px;height:1px;background:var(--gold);margin:0.55rem auto}
+.idet{font-size:0.58rem;letter-spacing:0.11em;text-transform:uppercase;color:var(--muted);font-family:'Jost',sans-serif;line-height:2}
+.idate{font-size:1.1rem;color:var(--sage);font-weight:400;margin:0.28rem 0}
+.imisa{background:var(--sage-pale);padding:0.6rem 1rem;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--sage);font-family:'Jost',sans-serif;text-align:center;border-top:1px solid var(--border)}
+.icd{background:var(--sage);padding:0.7rem;display:flex;justify-content:center;gap:0.7rem}
+.ci{text-align:center}
+.cn{font-size:1.1rem;color:white;font-weight:300;display:block}
+.cl{font-size:0.38rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.65);font-family:'Jost',sans-serif}
+.icfg{flex:1;min-width:280px}
+.icfg h2{font-family:'Cormorant Garamond',serif;font-size:1.55rem;margin-bottom:1.4rem}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center}
+.mo.open{display:flex}
+.modal{background:white;border-radius:16px;padding:2rem;width:500px;max-width:95vw;max-height:88vh;overflow-y:auto}
+.modal h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1.4rem}
+.ma{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.4rem}
+
+/* RSVP PÚBLICO */
+#rsvp-page{display:none;min-height:100vh;background:var(--sage-pale);align-items:center;justify-content:center;padding:1.5rem}
+#rsvp-page.active{display:flex}
+.rc{background:white;border-radius:20px;padding:2rem 2rem 2.5rem;max-width:460px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.1)}
+.rc-hero{background:var(--sage);border-radius:14px;padding:1.75rem;text-align:center;margin-bottom:1.5rem}
+.rc-pretitle{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:0.5rem}
+.rc-names{font-family:'Cormorant Garamond',serif;font-size:2rem;color:white;font-style:italic;font-weight:300;line-height:1.15}
+.rc-divider{width:36px;height:1px;background:var(--gold);margin:0.75rem auto}
+.rc-date{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(255,255,255,0.85);letter-spacing:0.06em}
+.rc-lugar{font-size:0.68rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.3rem}
+
+.rc-eventos{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+.rc-ev{background:var(--sage-pale);border-radius:12px;padding:1rem;text-align:center}
+.rc-ev-icon{font-size:1.3rem;margin-bottom:0.4rem}
+.rc-ev-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.25rem}
+.rc-ev-hora{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--sage)}
+.rc-ev-lugar{font-size:0.72rem;color:var(--char);margin-top:0.15rem;line-height:1.3}
+
+.rib{background:var(--sage-pale);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.25rem}
+.rir{display:flex;justify-content:space-between;margin-bottom:0.4rem;font-size:0.82rem}
+.rir:last-child{margin-bottom:0}
+.ril{color:var(--muted);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em}
+
+.rb{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--sage);color:white;padding:0.72rem 1.2rem;border-radius:10px;font-size:0.81rem;opacity:0;transform:translateY(8px);transition:all 0.3s;z-index:999;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{background:var(--red)}
+
+@media(max-width:640px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:1fr}
+  nav{padding:0 0.75rem}
+  .nav-tab{padding:0 0.6rem;font-size:0.67rem}
+  .page{padding:1rem}
+  th,td{padding:0.6rem 0.7rem;font-size:0.78rem}
+  .rc-eventos{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="lcard">
+    <div class="llogo">Mónica & Eduardo</div>
+    <div class="lsub">Panel de administración</div>
+    <div class="lerr" id="lerr">Usuario o contraseña incorrectos</div>
+    <input type="text" id="l-user" placeholder="Usuario" value="admin" autocomplete="username">
+    <input type="password" id="l-pass" placeholder="Contraseña" autocomplete="current-password">
+    <button class="btn btn-primary" style="width:100%;margin-top:0.25rem" onclick="doLogin()">Ingresar</button>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app" style="display:none">
+  <nav>
+    <div class="nav-logo">Mónica & Eduardo</div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="showPage('invitacion')">Invitación</div>
+      <div class="nav-tab" onclick="showPage('admin')">Asistencia</div>
+      <div class="nav-tab" onclick="showPage('mensajes')">Mensajes</div>
+      <div class="nav-tab" onclick="showPage('mesas')">Mesas</div>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-user"></span>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+    </div>
+  </nav>
+
+  <!-- INVITACIÓN CONFIG -->
+  <div id="page-invitacion" class="page active">
+    <div class="iw">
+      <!-- Preview del celular -->
+      <div class="iphone">
+        <div class="iscreen">
+          <div class="ienv">
+            <div class="iflap"></div>
+            <div class="imono" id="prev-mono">M & E</div>
+          </div>
+          <div class="ibody">
+            <div class="ipt">DESEAMOS COMPARTIR CON USTEDES LA ALEGRÍA DE NUESTRO MATRIMONIO</div>
+            <div class="inames" id="prev-names">Mónica<br>&amp; Eduardo</div>
+            <div class="idiv"></div>
+            <div class="idet" id="prev-lugar">JARDÍN CASTA BRAVA</div>
+            <div class="idate" id="prev-date">·</div>
+            <div class="idet" id="prev-hora">20:00 HRS.</div>
+          </div>
+          <div class="imisa" id="prev-misa">⛪ MISA 5:00 P.M. · TEMPLO DEL PERPETUO SOCORRO</div>
+          <div class="icd">
+            <div class="ci"><span class="cn" id="cnt-d">—</span><span class="cl">Días</span></div>
+            <div class="ci"><span class="cn" id="cnt-h">—</span><span class="cl">Hrs</span></div>
+            <div class="ci"><span class="cn" id="cnt-m">—</span><span class="cl">Min</span></div>
+            <div class="ci"><span class="cn" id="cnt-s">—</span><span class="cl">Seg</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Config -->
+      <div class="icfg">
+        <h2>Configurar Evento</h2>
+        <div class="fsec">
+          <h3>Novios</h3>
+          <div class="frow">
+            <div><label>Nombre de la novia</label><input type="text" id="cfg-n1" value="Mónica Rivera Bracho" oninput="updatePreview()"></div>
+            <div><label>Nombre del novio</label><input type="text" id="cfg-n2" value="Eduardo Castañeda Cuevas" oninput="updatePreview()"></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <h3>Recepción</h3>
+          <div class="frow">
+            <div><label>Fecha</label><input type="date" id="cfg-fecha" oninput="updatePreview()"></div>
+            <div><label>Hora</label><input type="time" id="cfg-hora" oninput="updatePreview()"></div>
+          </div>
+          <div class="frow s1">
+            <div><label>Lugar</label><input type="text" id="cfg-lugar" oninput="updatePreview()"></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <h3>Misa</h3>
+          <div class="frow">
+            <div><label>Hora de la misa</label><input type="time" id="cfg-misa-hora" oninput="updatePreview()"></div>
+            <div><label>Lugar de la misa</label><input type="text" id="cfg-misa-lugar" oninput="updatePreview()"></div>
+          </div>
+        </div>
+        <div class="fsec">
+          <h3>Mensaje</h3>
+          <div class="frow s1">
+            <div><textarea id="cfg-msg" rows="2" style="resize:none" placeholder="Los esperamos con todo nuestro amor."></textarea></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="saveEvento()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASISTENCIA -->
+  <div id="page-admin" class="page">
+    <div class="ph">
+      <h1>Reporte de Asistencia</h1>
+      <p>Seguimiento en tiempo real de confirmaciones</p>
+      <div class="ph-act">
+        <input class="si" type="text" placeholder="Buscar invitado..." oninput="filterTable(this.value)">
+        <button class="btn btn-primary" onclick="openModal()">+ Agregar invitado</button>
+        <button class="btn btn-outline" onclick="exportCSV()">Exportar CSV</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc sc-t"><div class="n" id="s-total">0</div><div class="l">Total familias</div></div>
+      <div class="sc sc-c"><div class="n" id="s-conf">0</div><div class="l">Confirmados</div></div>
+      <div class="sc sc-p"><div class="n" id="s-pend">0</div><div class="l">Pendientes</div></div>
+      <div class="sc sc-d"><div class="n" id="s-dec">0</div><div class="l">No asisten</div></div>
+    </div>
+    <div class="tw">
+      <div class="th2">
+        <h3>Lista de invitados</h3>
+        <div class="ftabs">
+          <button class="ftab active" onclick="setFilter('todos',this)">Todos</button>
+          <button class="ftab" onclick="setFilter('Confirmado',this)">Confirmados</button>
+          <button class="ftab" onclick="setFilter('Pendiente',this)">Pendientes</button>
+          <button class="ftab" onclick="setFilter('No asiste',this)">No asisten</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Nombre</th><th>WhatsApp</th><th>Personas</th><th>Mesa</th><th>Estado</th><th>Enlace</th><th>Acciones</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENSAJES -->
+  <div id="page-mensajes" class="page">
+    <div class="ph"><h1>Mensajes de Invitados</h1><p>Respuestas recibidas al confirmar</p></div>
+    <div class="mg" id="mgrid"></div>
+  </div>
+
+  <!-- MESAS -->
+  <div id="page-mesas" class="page">
+    <div class="ph">
+      <h1>Gestor de Mesas</h1>
+      <p>Arrastra invitados para asignarlos</p>
+      <div class="ph-act"><button class="btn btn-primary" onclick="addMesa()">+ Nueva mesa</button></div>
+    </div>
+    <div class="ml">
+      <div class="smb">
+        <h3>Sin mesa <span id="sm-badge" style="background:var(--sage-pale);color:var(--sage);padding:0.15rem 0.5rem;border-radius:20px;font-size:0.66rem">0</span></h3>
+        <div id="sm-list"></div>
+      </div>
+      <div class="mg2" id="mesas-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RSVP PÚBLICO -->
+<div id="rsvp-page">
+  <div class="rc">
+    <div id="rsvp-loading" style="text-align:center;color:var(--muted);font-size:0.85rem;padding:2rem 0">Cargando invitación...</div>
+    <div id="rsvp-content" style="display:none">
+      <!-- Hero -->
+      <div class="rc-hero">
+        <div class="rc-pretitle">Los invitan a su boda</div>
+        <div class="rc-names" id="rsvp-title-names">Mónica<br>&amp;<br>Eduardo</div>
+        <div class="rc-divider"></div>
+        <div class="rc-date" id="rsvp-fecha-txt">—</div>
+        <div class="rc-lugar" id="rsvp-lugar-txt">—</div>
+      </div>
+
+      <!-- Misa + Recepción -->
+      <div class="rc-eventos">
+        <div class="rc-ev">
+          <div class="rc-ev-icon">⛪</div>
+          <div class="rc-ev-label">Misa</div>
+          <div class="rc-ev-hora" id="rsvp-misa-hora">5:00 p.m.</div>
+          <div class="rc-ev-lugar" id="rsvp-misa-lugar">Templo del Perpetuo Socorro</div>
+        </div>
+        <div class="rc-ev">
+          <div class="rc-ev-icon">🥂</div>
+          <div class="rc-ev-label">Recepción</div>
+          <div class="rc-ev-hora" id="rsvp-recep-hora">8:00 p.m.</div>
+          <div class="rc-ev-lugar" id="rsvp-recep-lugar">Jardín Casta Brava</div>
+        </div>
+      </div>
+
+      <!-- Info invitado -->
+      <div class="rib">
+        <div class="rir"><span class="ril">Invitado</span><span id="ri-nombre" style="font-weight:500"></span></div>
+        <div class="rir"><span class="ril">Personas</span><span id="ri-personas"></span></div>
+      </div>
+
+      <div id="rsvp-ya" style="display:none;margin-bottom:1rem">
+        <div style="background:var(--sage-pale);border-radius:10px;padding:0.85rem;font-size:0.83rem;color:var(--sage)">
+          ✓ Ya respondiste como <strong id="rsvp-prev-estado"></strong>. Puedes cambiar tu respuesta.
+        </div>
+      </div>
+
+      <div id="rsvp-form">
+        <div style="margin-bottom:1rem">
+          <label>Mensaje para los novios (opcional)</label>
+          <textarea id="rsvp-msg" rows="2" style="resize:none;margin-top:0.3rem" placeholder="¡Felicidades! Con mucho gusto..."></textarea>
+        </div>
+        <div class="rb">
+          <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="responder('Confirmado')">✓ Confirmar asistencia</button>
+          <button class="btn btn-danger" style="flex:1;justify-content:center" onclick="responder('No asiste')">✗ No podré asistir</button>
+        </div>
+      </div>
+
+      <div id="rsvp-gracias" style="display:none;text-align:center;padding:1.5rem 0">
+        <div style="font-size:2.5rem;margin-bottom:0.75rem" id="rsvp-emoji">🎉</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--sage);line-height:1.4" id="rsvp-gracias-msg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INVITADO -->
+<div class="mo" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Agregar Invitado</h3>
+    <input type="hidden" id="m-id">
+    <div class="frow s1" style="margin-bottom:0.75rem">
+      <div><label>Nombre completo / familia</label><input type="text" id="m-nombre" placeholder="Ej: Familia García López"></div>
+    </div>
+    <div class="frow" style="margin-bottom:0.75rem">
+      <div><label>WhatsApp (con lada, sin +)</label><input type="text" id="m-wa" placeholder="521234567890" oninput="updateWAPreview()"></div>
+      <div><label>Personas</label><input type="number" id="m-personas" value="2" min="1" max="30"></div>
+    </div>
+    <div class="frow" style="margin-bottom:0.75rem">
+      <div><label>Mesa (0 = sin asignar)</label><input type="number" id="m-mesa" value="0" min="0"></div>
+      <div><label>Estado</label>
+        <select id="m-estado">
+          <option value="Pendiente">Pendiente</option>
+          <option value="Confirmado">Confirmado</option>
+          <option value="No asiste">No asiste</option>
+        </select>
+      </div>
+    </div>
+    <div id="wa-preview" style="display:none;background:var(--sage-pale);border-radius:10px;padding:0.85rem;margin-top:0.5rem">
+      <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.4rem">Vista previa WhatsApp</div>
+      <div id="wa-msg-preview" style="font-size:0.8rem;line-height:1.6;color:var(--char)"></div>
+    </div>
+    <div class="ma">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveInvitado()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let invitados=[],mesas=[],evento={},filtro='todos',search='',editId=null,rsvpToken=null;
+const $=id=>document.getElementById(id);
+
+function toast(msg,err=false){
+  const t=$('toast');t.textContent=msg;
+  t.className='toast show'+(err?' err':'');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+async function api(method,url,body){
+  const o={method,headers:{'Content-Type':'application/json'}};
+  if(body)o.body=JSON.stringify(body);
+  const r=await fetch(url,o);const d=await r.json();
+  if(!r.ok)throw new Error(d.error||'Error');
+  return d;
+}
+function fmtFecha(f){
+  if(!f||f==='2027-01-01')return '—';
+  const[y,m,d]=f.split('-');
+  const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return`${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
+}
+function fmtHora(h){
+  if(!h)return'—';
+  const[hh,mm]=h.split(':');
+  const n=parseInt(hh);
+  return`${n>12?n-12:n||12}:${mm} ${n>=12?'p.m.':'a.m.'}`;
+}
+
+async function init(){
+  const path=window.location.pathname;
+  const rsvpM=path.match(/^\/rsvp\/([a-f0-9]+)$/);
+  if(rsvpM){
+    rsvpToken=rsvpM[1];
+    $('rsvp-page').classList.add('active');
+    loadRSVP(rsvpToken);return;
+  }
+  try{
+    const me=await api('GET','/api/auth/me');
+    showApp(me.username);
+  }catch{
+    $('login-page').classList.add('active');
+  }
+}
+
+async function doLogin(){
+  try{
+    await api('POST','/api/auth/login',{username:$('l-user').value.trim(),password:$('l-pass').value});
+    $('login-page').classList.remove('active');
+    showApp($('l-user').value.trim());
+  }catch{$('lerr').style.display='block';}
+}
+async function doLogout(){await api('POST','/api/auth/logout');location.reload();}
+$('l-pass').addEventListener('keydown',e=>e.key==='Enter'&&doLogin());
+
+function showApp(username){
+  $('admin-app').style.display='block';
+  $('nav-user').textContent=username;
+  loadEvento();loadInvitados();startCountdown();
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  $('page-'+p).classList.add('active');
+  document.querySelector(`[onclick="showPage('${p}')"]`).classList.add('active');
+  if(p==='admin')renderTabla();
+  if(p==='mensajes')renderMensajes();
+  if(p==='mesas')loadMesas();
+}
+
+async function loadEvento(){
+  try{
+    evento=await api('GET','/api/evento');
+    $('cfg-n1').value=evento.nombre1||'Mónica Rivera Bracho';
+    $('cfg-n2').value=evento.nombre2||'Eduardo Castañeda Cuevas';
+    $('cfg-fecha').value=evento.fecha||'';
+    $('cfg-hora').value=evento.hora||'20:00';
+    $('cfg-lugar').value=evento.lugar||'Jardín Casta Brava';
+    $('cfg-misa-hora').value=evento.misa_hora||'17:00';
+    $('cfg-misa-lugar').value=evento.misa_lugar||'Templo del Perpetuo Socorro';
+    $('cfg-msg').value=evento.mensaje||'';
+    updatePreview();
+  }catch(e){toast('Error cargando evento',true);}
+}
+async function saveEvento(){
+  try{
+    evento=await api('PATCH','/api/evento',{
+      nombre1:$('cfg-n1').value,nombre2:$('cfg-n2').value,
+      fecha:$('cfg-fecha').value,hora:$('cfg-hora').value,
+      lugar:$('cfg-lugar').value,
+      misa_hora:$('cfg-misa-hora').value,
+      misa_lugar:$('cfg-misa-lugar').value,
+      mensaje:$('cfg-msg').value
+    });
+    updatePreview();toast('¡Cambios guardados!');
+  }catch(e){toast(e.message,true);}
+}
+function updatePreview(){
+  const n1=$('cfg-n1').value||'Mónica',n2=$('cfg-n2').value||'Eduardo';
+  $('prev-mono').textContent=`${n1[0]||'M'} & ${n2[0]||'E'}`;
+  $('prev-names').innerHTML=`${n1.split(' ')[0]}<br>&amp; ${n2.split(' ')[0]}`;
+  const f=$('cfg-fecha').value;
+  $('prev-date').textContent=f?fmtFecha(f):'· · ·';
+  $('prev-hora').textContent=($('cfg-hora').value||'20:00')+' HRS.';
+  $('prev-lugar').textContent=($('cfg-lugar').value||'JARDÍN CASTA BRAVA').toUpperCase();
+  const mh=$('cfg-misa-hora').value||'17:00';
+  const ml=$('cfg-misa-lugar').value||'Templo del Perpetuo Socorro';
+  $('prev-misa').textContent=`⛪ MISA ${fmtHora(mh).toUpperCase()} · ${ml.toUpperCase()}`;
+}
+function startCountdown(){
+  function tick(){
+    const f=evento.fecha||'2027-01-01',h=evento.hora||'20:00';
+    const diff=new Date(`${f}T${h}`)-Date.now();
+    if(diff<=0)return;
+    $('cnt-d').textContent=Math.floor(diff/86400000);
+    $('cnt-h').textContent=Math.floor((diff%86400000)/3600000);
+    $('cnt-m').textContent=Math.floor((diff%3600000)/60000);
+    $('cnt-s').textContent=Math.floor((diff%60000)/1000);
+  }
+  tick();setInterval(tick,1000);
+}
+
+async function loadInvitados(){
+  try{invitados=await api('GET','/api/invitados');renderTabla();renderStats();}
+  catch(e){toast('Error',true);}
+}
+function renderStats(){
+  $('s-total').textContent=invitados.length;
+  $('s-conf').textContent=invitados.filter(i=>i.estado==='Confirmado').length;
+  $('s-pend').textContent=invitados.filter(i=>i.estado==='Pendiente').length;
+  $('s-dec').textContent=invitados.filter(i=>i.estado==='No asiste').length;
+}
+function bc(e){return e==='Confirmado'?'b-c':e==='No asiste'?'b-d':'b-p';}
+function renderTabla(){
+  renderStats();
+  let lista=invitados;
+  if(filtro!=='todos')lista=lista.filter(i=>i.estado===filtro);
+  if(search)lista=lista.filter(i=>i.nombre.toLowerCase().includes(search.toLowerCase()));
+  const host=window.location.origin;
+  $('tbody').innerHTML=lista.length?lista.map(inv=>`
+    <tr>
+      <td>${inv.nombre}</td>
+      <td>${inv.whatsapp?`<a href="https://wa.me/${inv.whatsapp}" target="_blank" style="color:var(--ok)">+${inv.whatsapp}</a>`:'—'}</td>
+      <td>${inv.personas}</td>
+      <td>${inv.mesa>0?'Mesa '+inv.mesa:'—'}</td>
+      <td><span class="badge ${bc(inv.estado)}">${inv.estado}</span></td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-ghost btn-sm" onclick="copyLink('${host}/rsvp/${inv.token}')">Copiar</button>
+        ${inv.whatsapp?`<button class="btn btn-wa btn-sm" onclick="sendWA(${inv.id})">WA</button>`:''}
+      </td>
+      <td style="white-space:nowrap">
+        <select style="padding:0.28rem;font-size:0.72rem;border:1px solid var(--border);border-radius:6px;background:var(--cream);font-family:'Jost',sans-serif" onchange="cambiarEstado(${inv.id},this.value)">
+          <option ${inv.estado==='Confirmado'?'selected':''}>Confirmado</option>
+          <option ${inv.estado==='Pendiente'?'selected':''}>Pendiente</option>
+          <option ${inv.estado==='No asiste'?'selected':''}>No asiste</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="editInv(${inv.id})">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="delInv(${inv.id})">✕</button>
+      </td>
+    </tr>`).join('')
+    :'<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted)">Sin invitados aún. Presiona "+ Agregar invitado"</td></tr>';
+}
+async function cambiarEstado(id,estado){
+  try{const u=await api('PATCH',`/api/invitados/${id}`,{estado});const i=invitados.findIndex(x=>x.id===id);if(i>=0)invitados[i]=u;renderTabla();}
+  catch(e){toast(e.message,true);}
+}
+async function delInv(id){
+  if(!confirm('¿Eliminar este invitado?'))return;
+  try{await api('DELETE',`/api/invitados/${id}`);invitados=invitados.filter(i=>i.id!==id);renderTabla();toast('Eliminado');}
+  catch(e){toast(e.message,true);}
+}
+function copyLink(url){navigator.clipboard.writeText(url).then(()=>toast('Enlace copiado')).catch(()=>toast('No se pudo copiar',true));}
+function sendWA(id){
+  const inv=invitados.find(i=>i.id===id);if(!inv?.whatsapp){toast('Sin número',true);return;}
+  const host=window.location.origin;
+  const link=`${host}/rsvp/${inv.token}`;
+  const n1=(evento.nombre1||'Mónica').split(' ')[0];
+  const n2=(evento.nombre2||'Eduardo').split(' ')[0];
+  const fecha=fmtFecha(evento.fecha);
+  const mh=fmtHora(evento.misa_hora||'17:00');
+  const rh=fmtHora(evento.hora||'20:00');
+  const msg=`Hola ${inv.nombre.split(' ')[0]} 👋\n\n${n1} y ${n2} los invitan a su boda el *${fecha}*.\n\n⛪ *Misa:* ${mh} — ${evento.misa_lugar||'Templo del Perpetuo Socorro'}\n🥂 *Recepción:* ${rh} — ${evento.lugar||'Jardín Casta Brava'}\n\nConfirma tu asistencia aquí:\n${link}\n\n¡Los esperamos con mucho cariño! 🌿`;
+  window.open(`https://wa.me/${inv.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function setFilter(f,btn){filtro=f;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTabla();}
+function filterTable(v){search=v;renderTabla();}
+function exportCSV(){
+  const rows=[['Nombre','WhatsApp','Personas','Mesa','Estado','Mensaje']];
+  invitados.forEach(i=>rows.push([i.nombre,i.whatsapp||'',i.personas,i.mesa||'',i.estado,i.mensaje||'']));
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='invitados.csv';a.click();
+}
+
+function openModal(){
+  editId=null;$('modal-title').textContent='Agregar Invitado';
+  $('m-id').value='';$('m-nombre').value='';$('m-wa').value='';
+  $('m-personas').value=2;$('m-mesa').value=0;$('m-estado').value='Pendiente';
+  $('wa-preview').style.display='none';
+  $('modal').classList.add('open');setTimeout(()=>$('m-nombre').focus(),100);
+}
+function editInv(id){
+  const inv=invitados.find(i=>i.id===id);if(!inv)return;
+  editId=id;$('modal-title').textContent='Editar Invitado';
+  $('m-nombre').value=inv.nombre;$('m-wa').value=inv.whatsapp||'';
+  $('m-personas').value=inv.personas;$('m-mesa').value=inv.mesa||0;$('m-estado').value=inv.estado;
+  updateWAPreview();$('modal').classList.add('open');
+}
+function closeModal(){$('modal').classList.remove('open');}
+function updateWAPreview(){
+  const wa=$('m-wa').value.trim();
+  if(!wa){$('wa-preview').style.display='none';return;}
+  const n1=(evento.nombre1||'Mónica').split(' ')[0];
+  const n2=(evento.nombre2||'Eduardo').split(' ')[0];
+  const nombre=$('m-nombre').value.trim().split(' ')[0]||'invitado';
+  const mh=fmtHora(evento.misa_hora||'17:00');
+  const rh=fmtHora(evento.hora||'20:00');
+  $('wa-msg-preview').innerHTML=`Hola ${nombre} 👋<br><br>${n1} y ${n2} los invitan a su boda el <b>${fmtFecha(evento.fecha)}</b>.<br>⛪ Misa: ${mh} — ${evento.misa_lugar||'Templo del Perpetuo Socorro'}<br>🥂 Recepción: ${rh} — ${evento.lugar||'Jardín Casta Brava'}<br><br><span style="color:var(--sage)">[enlace personalizado]</span>`;
+  $('wa-preview').style.display='block';
+}
+async function saveInvitado(){
+  const nombre=$('m-nombre').value.trim();if(!nombre){toast('Ingresa el nombre',true);return;}
+  const body={nombre,personas:parseInt($('m-personas').value)||1,mesa:parseInt($('m-mesa').value)||0,estado:$('m-estado').value,whatsapp:$('m-wa').value.replace(/\D/g,'')};
+  try{
+    if(editId){const u=await api('PATCH',`/api/invitados/${editId}`,body);const i=invitados.findIndex(x=>x.id===editId);if(i>=0)invitados[i]=u;toast('Actualizado');}
+    else{invitados.push(await api('POST','/api/invitados',body));toast('Agregado');}
+    closeModal();renderTabla();
+  }catch(e){toast(e.message,true);}
+}
+
+function renderMensajes(){
+  const lista=invitados.filter(i=>i.mensaje?.trim());
+  $('mgrid').innerHTML=lista.length?lista.map(inv=>`
+    <div class="mc">
+      <div class="mc-h"><div class="mc-n">${inv.nombre}</div><span class="badge ${bc(inv.estado)}">${inv.estado}</span></div>
+      <div class="mc-t">"${inv.mensaje}"</div>
+      <div class="mc-m">${inv.personas} persona${inv.personas>1?'s':''}</div>
+    </div>`).join('')
+    :'<div style="color:var(--muted);font-size:0.85rem">Aún no hay mensajes.</div>';
+}
+
+async function loadMesas(){
+  try{mesas=await api('GET','/api/mesas');renderMesas();}catch(e){toast('Error',true);}
+}
+async function addMesa(){
+  const nombre=prompt('Nombre de la nueva mesa:','Mesa '+(mesas.length+1));if(!nombre)return;
+  try{mesas.push(await api('POST','/api/mesas',{nombre,capacidad:8}));renderMesas();toast('Mesa agregada');}
+  catch(e){toast(e.message,true);}
+}
+function renderMesas(){
+  const sin=invitados.filter(i=>!i.mesa||i.mesa===0);
+  $('sm-badge').textContent=sin.length;
+  $('sm-list').innerHTML=sin.length?sin.map(inv=>`
+    <div class="smr"><span>${inv.nombre}</span><span style="color:var(--muted);font-size:0.74rem">${inv.personas}p</span></div>`).join('')
+    :'<div style="font-size:0.77rem;color:var(--muted);text-align:center;padding:0.75rem 0">Todos asignados ✓</div>';
+  $('mesas-grid').innerHTML=mesas.map(mesa=>{
+    const mi=invitados.filter(i=>i.mesa===mesa.id);
+    const tot=mi.reduce((a,b)=>a+b.personas,0);
+    return`<div class="mcard">
+      <div class="mh"><h4>${mesa.nombre}</h4><span>${tot}/${mesa.capacidad}</span></div>
+      <div class="mb2">
+        ${mi.length?mi.map(inv=>`
+          <div class="mr">
+            <span><span class="dot dot-${inv.estado==='Confirmado'?'C':inv.estado==='No asiste'?'N':'P'}"></span>${inv.nombre}</span>
+            <span style="color:var(--muted);font-size:0.73rem">${inv.personas}</span>
+          </div>`).join(''):'<div style="font-size:0.77rem;color:var(--muted)">Sin invitados</div>'}
+        ${sin.length?`<div style="margin-top:0.7rem;border-top:1px solid var(--border);padding-top:0.5rem">
+          <select style="width:100%;padding:0.3rem;font-size:0.73rem;border:1px solid var(--border);border-radius:6px;background:var(--cream);font-family:'Jost',sans-serif" onchange="asignarMesa(${mesa.id},this)">
+            <option value="">Asignar invitado...</option>
+            ${sin.map(inv=>`<option value="${inv.id}">${inv.nombre}</option>`).join('')}
+          </select></div>`:''
+        }
+      </div></div>`;
+  }).join('');
+}
+async function asignarMesa(mesaId,sel){
+  const invId=sel.value;if(!invId)return;
+  try{await api('PATCH',`/api/mesas/${mesaId}/invitado/${invId}`);
+    const inv=invitados.find(i=>i.id===parseInt(invId));if(inv)inv.mesa=mesaId;
+    sel.value='';renderMesas();toast('Asignado');
+  }catch(e){toast(e.message,true);}
+}
+
+// RSVP PÚBLICO
+async function loadRSVP(token){
+  try{
+    const{invitado:inv,evento:ev}=await api('GET',`/api/invitados/confirmar/${token}`);
+    $('rsvp-loading').style.display='none';$('rsvp-content').style.display='block';
+    // Hero
+    $('rsvp-title-names').innerHTML=`${ev.nombre1}<br>&amp;<br>${ev.nombre2}`;
+    $('rsvp-fecha-txt').textContent=fmtFecha(ev.fecha);
+    $('rsvp-lugar-txt').textContent=(ev.lugar||'').toUpperCase();
+    // Eventos
+    $('rsvp-misa-hora').textContent=fmtHora(ev.misa_hora||'17:00');
+    $('rsvp-misa-lugar').textContent=ev.misa_lugar||'Templo del Perpetuo Socorro';
+    $('rsvp-recep-hora').textContent=fmtHora(ev.hora||'20:00');
+    $('rsvp-recep-lugar').textContent=ev.lugar||'Jardín Casta Brava';
+    // Invitado
+    $('ri-nombre').textContent=inv.nombre;
+    $('ri-personas').textContent=`${inv.personas} persona${inv.personas>1?'s':''}`;
+    if(inv.estado!=='Pendiente'){$('rsvp-ya').style.display='block';$('rsvp-prev-estado').textContent=inv.estado;}
+    if(inv.mensaje)$('rsvp-msg').value=inv.mensaje;
+  }catch{$('rsvp-loading').textContent='Invitación no encontrada o enlace inválido.';}
+}
+async function responder(estado){
+  try{
+    await api('POST',`/api/invitados/confirmar/${rsvpToken}`,{estado,mensaje:$('rsvp-msg').value});
+    $('rsvp-form').style.display='none';$('rsvp-ya').style.display='none';
+    $('rsvp-gracias').style.display='block';
+    $('rsvp-emoji').textContent=estado==='Confirmado'?'🎊':'💌';
+    $('rsvp-gracias-msg').textContent=estado==='Confirmado'
+      ?'¡Gracias!\nTe esperamos con mucho cariño 🌿'
+      :'Gracias por avisarnos.\n¡Los tendremos presentes con cariño!';
+  }catch(e){toast(e.message,true);}
+}
+
+init();
+</script>
+</body>
+</html>
