@@ -1,5 +1,5 @@
 node_modules/
-db/*.db
-db/*.db-shm
-db/*.db-wal
+db/rsvp.db
+db/rsvp.db-shm
+db/rsvp.db-wal
 .env

@@ -3,13 +3,8 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'rsvp.db');
-
-// Crear el directorio si no existe
-const dir = path.dirname(DB_PATH);
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir, { recursive: true });
-}
+// Siempre guardar dentro del proyecto, ignorar DB_PATH externo
+const DB_PATH = path.join(__dirname, 'rsvp.db');
 
 const db = new Database(DB_PATH);
 
@@ -60,11 +55,9 @@ db.exec(`
   );
 `);
 
-// Agregar columnas misa si no existen
 try { db.exec(`ALTER TABLE eventos ADD COLUMN misa_hora TEXT DEFAULT '17:00'`); } catch {}
 try { db.exec(`ALTER TABLE eventos ADD COLUMN misa_lugar TEXT DEFAULT ''`); } catch {}
 
-// Seed evento real
 const evento = db.prepare('SELECT id FROM eventos WHERE id = 1').get();
 if (!evento) {
   db.prepare(`INSERT INTO eventos (nombre1, nombre2, fecha, hora, lugar, misa_hora, misa_lugar, mensaje)
