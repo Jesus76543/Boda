@@ -16,7 +16,7 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre1 TEXT NOT NULL DEFAULT 'Novia',
     nombre2 TEXT NOT NULL DEFAULT 'Novio',
-    fecha TEXT NOT NULL DEFAULT '2027-01-01',
+    fecha TEXT NOT NULL DEFAULT '2026-10-13',
     hora TEXT NOT NULL DEFAULT '20:00',
     lugar TEXT NOT NULL DEFAULT 'Por definir',
     misa_hora TEXT DEFAULT '17:00',
@@ -61,7 +61,7 @@ try { db.exec(`ALTER TABLE eventos ADD COLUMN misa_lugar TEXT DEFAULT ''`); } ca
 const evento = db.prepare('SELECT id FROM eventos WHERE id = 1').get();
 if (!evento) {
   db.prepare(`INSERT INTO eventos (nombre1, nombre2, fecha, hora, lugar, misa_hora, misa_lugar, mensaje)
-    VALUES ('Mónica','Eduardo','2027-01-01','20:00','Jardín Casta Brava','17:00','Templo del Perpetuo Socorro','Los esperamos con todo nuestro amor.')`).run();
+    VALUES ('Mónica','Eduardo','2026-10-13','20:00','Jardín Casta Brava','17:00','Templo del Perpetuo Socorro','Los esperamos con todo nuestro amor.')`).run();
 }
 
 const adminUser = db.prepare('SELECT id FROM usuarios WHERE username = ?').get('admin');

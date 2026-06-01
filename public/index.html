@@ -8,19 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --sage:#6b7c5e;--sage-l:#8a9e7a;--sage-pale:#e8ede3;
-  --cream:#f8f5ef;--warm:#fdfaf5;--char:#2c2c28;
-  --muted:#8a8880;--border:rgba(107,124,94,0.2);
-  --gold:#b8975a;--red:#c7615a;--ok:#5a8b6b;
+  --sage:#0d2410;--sage-l:#1a3d18;--sage-pale:#ede8d8;
+  --cream:#f5f0e8;--warm:#faf6ee;--char:#1a1a14;
+  --muted:#7a6a4a;--border:rgba(184,151,90,0.25);
+  --gold:#c9a96e;--red:#c7615a;--ok:#2d6b2a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--char);min-height:100vh}
 
 /* LOGIN */
-#login-page{display:none;align-items:center;justify-content:center;min-height:100vh;padding:1rem;background:var(--sage-pale)}
+#login-page{display:none;align-items:center;justify-content:center;min-height:100vh;padding:1rem;background:var(--sage)}
 #login-page.active{display:flex}
 .lcard{background:white;border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:360px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
-.llogo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--sage);font-style:italic;margin-bottom:0.15rem}
+.llogo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);font-style:italic;margin-bottom:0.15rem}
 .lsub{font-size:0.7rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem}
 .lerr{color:var(--red);font-size:0.78rem;margin-bottom:0.75rem;display:none}
 .lcard input{width:100%;padding:0.72rem;border:1px solid var(--border);border-radius:10px;font-family:'Jost',sans-serif;font-size:0.88rem;background:var(--cream);outline:none;margin-bottom:0.75rem;color:var(--char)}
@@ -28,11 +28,11 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--char);min
 
 /* NAV */
 nav{background:var(--warm);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:0.06em;color:var(--sage);font-style:italic}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;letter-spacing:0.06em;color:var(--gold);font-style:italic}
 .nav-tabs{display:flex}
 .nav-tab{padding:0 1rem;height:56px;display:flex;align-items:center;font-size:0.73rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
-.nav-tab:hover{color:var(--sage)}
-.nav-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
+.nav-tab:hover{color:var(--gold)}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 .nav-right{display:flex;align-items:center;gap:0.75rem}
 .nav-user{font-size:0.72rem;color:var(--muted)}
 
@@ -40,7 +40,7 @@ nav{background:var(--warm);border-bottom:1px solid var(--border);display:flex;al
 .page{display:none;padding:2rem;max-width:1100px;margin:0 auto}
 .page.active{display:block}
 .ph{margin-bottom:2rem}
-.ph h1{font-family:'Cormorant Garamond',serif;font-size:1.9rem}
+.ph h1{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--sage)}
 .ph p{color:var(--muted);font-size:0.83rem;margin-top:0.2rem}
 .ph-act{display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;align-items:center}
 
@@ -67,7 +67,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--sage)}
 .sc{background:white;border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
 .sc .n{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400}
 .sc .l{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:0.2rem}
-.sc-t .n{color:var(--char)}.sc-c .n{color:var(--ok)}.sc-p .n{color:var(--gold)}.sc-d .n{color:var(--red)}
+.sc-t .n{color:var(--char)}.sc-c .n{color:#2d6b2a}.sc-p .n{color:var(--gold)}.sc-d .n{color:var(--red)}
 
 /* TABLE */
 .tw{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden}
@@ -139,18 +139,18 @@ tr:hover td{background:var(--sage-pale)}
 .ma{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.4rem}
 
 /* RSVP PÚBLICO */
-#rsvp-page{display:none;min-height:100vh;background:var(--sage-pale);align-items:center;justify-content:center;padding:1.5rem}
+#rsvp-page{display:none;min-height:100vh;background:var(--sage);align-items:center;justify-content:center;padding:1.5rem}
 #rsvp-page.active{display:flex}
 .rc{background:white;border-radius:20px;padding:2rem 2rem 2.5rem;max-width:460px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.1)}
-.rc-hero{background:var(--sage);border-radius:14px;padding:1.75rem;text-align:center;margin-bottom:1.5rem}
+.rc-hero{background:var(--sage);border-radius:14px;padding:1.75rem;text-align:center;margin-bottom:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
 .rc-pretitle{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:0.5rem}
-.rc-names{font-family:'Cormorant Garamond',serif;font-size:2rem;color:white;font-style:italic;font-weight:300;line-height:1.15}
+.rc-names{font-family:'Cormorant Garamond',serif;font-size:2rem;color:#e8d5a3;font-style:italic;font-weight:300;line-height:1.15}
 .rc-divider{width:36px;height:1px;background:var(--gold);margin:0.75rem auto}
 .rc-date{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(255,255,255,0.85);letter-spacing:0.06em}
 .rc-lugar{font-size:0.68rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.3rem}
 
 .rc-eventos{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
-.rc-ev{background:var(--sage-pale);border-radius:12px;padding:1rem;text-align:center}
+.rc-ev{background:#f5f0e8;border-radius:12px;padding:1rem;text-align:center}
 .rc-ev-icon{font-size:1.3rem;margin-bottom:0.4rem}
 .rc-ev-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.25rem}
 .rc-ev-hora{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--sage)}
@@ -447,7 +447,7 @@ async function api(method,url,body){
   return d;
 }
 function fmtFecha(f){
-  if(!f||f==='2027-01-01')return '—';
+  if(!f||f==='2026-10-13')return '—';
   const[y,m,d]=f.split('-');
   const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   return`${parseInt(d)} de ${M[parseInt(m)-1]} de ${y}`;
@@ -542,7 +542,7 @@ function updatePreview(){
 }
 function startCountdown(){
   function tick(){
-    const f=evento.fecha||'2027-01-01',h=evento.hora||'20:00';
+    const f=evento.fecha||'2026-10-13',h=evento.hora||'20:00';
     const diff=new Date(`${f}T${h}`)-Date.now();
     if(diff<=0)return;
     $('cnt-d').textContent=Math.floor(diff/86400000);
