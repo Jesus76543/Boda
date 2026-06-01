@@ -603,16 +603,36 @@ async function delInv(id){
   catch(e){toast(e.message,true);}
 }
 function copyLink(url){navigator.clipboard.writeText(url).then(()=>toast('Enlace copiado')).catch(()=>toast('No se pudo copiar',true));}
-function sendWA(id){
-  const inv=invitados.find(i=>i.id===id);if(!inv?.whatsapp){toast('Sin número',true);return;}
+function buildWAMsg(inv){
   const host=window.location.origin;
   const link=`${host}/rsvp/${inv.token}`;
-  const n1=(evento.nombre1||'Mónica').split(' ')[0];
-  const n2=(evento.nombre2||'Eduardo').split(' ')[0];
-  const fecha=fmtFecha(evento.fecha);
+  const n1=evento.nombre1||'Mónica Rivera Bracho';
+  const n2=evento.nombre2||'Eduardo Castañeda Cuevas';
   const mh=fmtHora(evento.misa_hora||'17:00');
-  const rh=fmtHora(evento.hora||'20:00');
-  const msg=`Hola ${inv.nombre.split(' ')[0]} 👋\n\n${n1} y ${n2} los invitan a su boda el *${fecha}*.\n\n⛪ *Misa:* ${mh} — ${evento.misa_lugar||'Templo del Perpetuo Socorro'}\n🥂 *Recepción:* ${rh} — ${evento.lugar||'Jardín Casta Brava'}\n\nConfirma tu asistencia aquí:\n${link}\n\n¡Los esperamos con mucho cariño! 🌿`;
+  const misaLugar=evento.misa_lugar||'Templo del Perpetuo Socorro';
+  const mapsLink='https://maps.apple.com/?address=Bulevar+Guadiana+15+de+Mayo+801,+34106+Durango,+Dgo';
+  const personas=inv.personas||2;
+  const fecha=fmtFecha(evento.fecha);
+  return `¡Nos casamos! 💍
+
+Tenemos el gusto de invitarte a acompañarnos a un momento muy especial en nuestras vidas.
+
+*${fecha} ${mh}, ${misaLugar}*
+
+*Recepción:* ${mapsLink}
+
+Hemos reservado lugares para ti: *${personas} Persona${personas>1?'s':''}*
+
+Para poder planificar adecuadamente, por favor confirma tu asistencia antes del *10 de octubre de 2026* a través del teléfono: 6182973531
+
+¡No podemos esperar para compartir este día contigo!
+
+Con cariño,
+*${n1} & ${n2}*`;
+}
+function sendWA(id){
+  const inv=invitados.find(i=>i.id===id);if(!inv?.whatsapp){toast('Sin número',true);return;}
+  const msg=buildWAMsg(inv);
   window.open(`https://wa.me/${inv.whatsapp}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 function setFilter(f,btn){filtro=f;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderTabla();}
@@ -642,12 +662,12 @@ function closeModal(){$('modal').classList.remove('open');}
 function updateWAPreview(){
   const wa=$('m-wa').value.trim();
   if(!wa){$('wa-preview').style.display='none';return;}
-  const n1=(evento.nombre1||'Mónica').split(' ')[0];
-  const n2=(evento.nombre2||'Eduardo').split(' ')[0];
   const nombre=$('m-nombre').value.trim().split(' ')[0]||'invitado';
+  const personas=parseInt($('m-personas').value)||2;
+  const fecha=fmtFecha(evento.fecha);
   const mh=fmtHora(evento.misa_hora||'17:00');
   const rh=fmtHora(evento.hora||'20:00');
-  $('wa-msg-preview').innerHTML=`Hola ${nombre} 👋<br><br>${n1} y ${n2} los invitan a su boda el <b>${fmtFecha(evento.fecha)}</b>.<br>⛪ Misa: ${mh} — ${evento.misa_lugar||'Templo del Perpetuo Socorro'}<br>🥂 Recepción: ${rh} — ${evento.lugar||'Jardín Casta Brava'}<br><br><span style="color:var(--sage)">[enlace personalizado]</span>`;
+  $('wa-msg-preview').innerHTML=`<b>¡Nos casamos! 💍</b><br><br>Tenemos el gusto de invitarte...<br><br><b>${fecha}</b><br><br>⛪ Misa: ${mh}<br>🥂 Recepción: ${rh}<br><br>Lugares reservados: <b>${personas} Persona${personas>1?'s':''}</b><br><br>[enlace de confirmación]<br><br>Confirma antes del <b>10 oct 2026</b> · Tel: 6188385761<br>🎁 Liverpool · Evento #51828234`;
   $('wa-preview').style.display='block';
 }
 async function saveInvitado(){
